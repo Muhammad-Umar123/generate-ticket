@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Swiper Ticket</title>
+    <title>Ticket</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
@@ -12,84 +12,41 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
-        body {
-            background: #ddd;
-        }
-
-        .header-banner {
-            background: #0d6efd;
-            color: white;
-            text-align: center;
-            padding: 15px;
-        }
-
-        .swiper {
-            margin: 50px auto 0;
-            width: 100%;
-        }
-
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-        }
 
 
-        /* Controls BELOW card */
-        .swiper-controls {
-            max-width: 150px;
-            margin: 15px auto 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .swiper-button-next,
-        .swiper-button-prev {
-            position: static !important;
-            width: 30px;
-            height: 30px;
-        }
-
-        .swiper-button-next::after,
-        .swiper-button-prev::after {
-            font-size: 18px;
-        }
-
-        .swiper-pagination {
-            position: static !important;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 
 <body>
 
     <div class="header-banner">
-        <h5>Disney On Ice presents Find Your Hero</h5>
-        <small>SAT - DEC - 2 ~ 3:00 PM · Vibrant Arena at The Mark</small>
+        <h5 id="event-name"></h5>
+        <small id="event-info"></small>
     </div>
 
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
+            @foreach($tickets as $ticket)
+            <div class="swiper-slide"
+                data-name="{{ $ticket->event_name }}"
+                data-date="{{ $ticket->event_datetime->format('D - M - d ~ h:i A') }}"
+                data-location="{{ $ticket->venue }}">
 
-            <!-- Slide 1 -->
-            <div class="swiper-slide">
                 <div class="ticket-card">
-                    <div class="ticket-header">Standard Admission</div>
+                    <div class="ticket-header">{{ $ticket->ticket_type }}</div>
 
                     <div class="ticket-details">
                         <div>
-                            <div>SEC</div>
-                            <strong>111</strong>
+                            <div class="first">SEC</div>
+                            <strong class="second">{{ $ticket->section }}</strong>
                         </div>
                         <div>
-                            <div>ROW</div>
-                            <strong>18</strong>
+                            <div class="first">ROW</div>
+                            <strong class="second">{{ $ticket->row }}</strong>
                         </div>
                         <div>
-                            <div>SEAT</div>
-                            <strong>13</strong>
+                            <div class="first">SEAT</div>
+                            <strong class="second">{{ $ticket->seat }}</strong>
                         </div>
                     </div>
 
@@ -106,7 +63,6 @@
         </div>
     </div>
 
-    <!-- Controls OUTSIDE Swiper -->
     <div class="swiper-controls">
         <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
@@ -125,7 +81,21 @@
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
+            on: {
+                init: function() {
+                    updateHeader(this.slides[this.activeIndex]);
+                },
+                slideChange: function() {
+                    updateHeader(this.slides[this.activeIndex]);
+                }
+            }
+
         });
+
+        function updateHeader(activeSlide) {
+            document.getElementById('event-name').innerText = activeSlide.dataset.name;
+            document.getElementById('event-info').innerText = activeSlide.dataset.date + ' · ' + activeSlide.dataset.location;
+        }
     </script>
 
 </body>

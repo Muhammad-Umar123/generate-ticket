@@ -17,14 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $tickets = Event::all();   
-    return view('welcome', compact('tickets'));
-});
+Route::get('/', [DashboardController::class, 'home'])->name('home');
 
-Route::get('/home', function () {
-    return view('swiper');
-})->name('home');
 
 Route::middleware('guest')->group(function () {
 
@@ -35,7 +29,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('tickets', TicketController::class);
 

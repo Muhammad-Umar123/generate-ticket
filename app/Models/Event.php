@@ -19,4 +19,8 @@ class Event extends Model
         'ticket_type',
         'ticket_link',
     ];
+
+    protected $casts = [
+    'event_datetime' => 'datetime',
+    ];
 }

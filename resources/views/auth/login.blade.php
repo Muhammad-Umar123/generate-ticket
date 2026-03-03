@@ -28,14 +28,14 @@
                             </div>
 
                             <div class="card-body">
-                                <form method="POST" action="{{ route('login.post') }}" class="needs-validation" novalidate="">
+                                <form method="POST" action="{{ route('login.post') }}" class="needs-validation">
                                     @csrf
                                     <div class="form-group">
                                         <label for="username">Email</label>
-                                        <input id="email" type="email" class="form-control" name="email" tabindex="1" value="{{ old('email') }}" required autofocus>
+                                        <input id="email" type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" tabindex="1" value="{{ old('email') }}" required autofocus>
                                         @error('email')
                                         <div class="invalid-feedback">
-                                            Specify valid email
+                                            {{ $message }}
                                         </div>
                                         @enderror
                                     </div>
@@ -45,7 +45,7 @@
                                             <div class="float-right">
                                             </div>
                                         </div>
-                                        <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                                        <input id="password" type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" tabindex="2" required>
                                         <div class="invalid-feedback">
                                             Kindly fill in your password
                                         </div>
