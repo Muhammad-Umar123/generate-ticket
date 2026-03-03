@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class, 'home'])->name('home');
+Route::get('/', function () {
+    return ;
+})->name('home');
 
 
 Route::middleware('guest')->group(function () {
