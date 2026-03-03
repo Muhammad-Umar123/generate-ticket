@@ -11360,6 +11360,17 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     margin-bottom: 20px;
 }
 
+#regenerate-link-btn{
+    color: #1074e1;
+}
+
+.showTicketsByLink{
+    color: #1074e1 !important;
+}
+.showTicketsByLink:hover{
+    color: #757982 !important;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     .ticket-card {

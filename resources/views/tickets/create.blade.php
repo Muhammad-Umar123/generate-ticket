@@ -105,11 +105,15 @@
 
                                 <div class="form-group col-md-6">
                                     <label>Ticket Link</label>
-                                    <input type="text"
-                                        name="ticket_link"
-                                        value="{{ old('ticket_link') }}"
-                                        class="form-control @error('ticket_link') is-invalid @elseif(old('ticket_link')) is-valid @enderror">
-
+                                    <div class="input-group">
+                                        <input type="text"
+                                            name="ticket_link"
+                                            value="{{ old('ticket_link', $ticketLink ?? '') }}"
+                                            class="form-control @error('ticket_link') is-invalid @elseif(old('ticket_link')) is-valid @enderror">
+                                        <button type="button" class="btn btn-outline-secondary" id="regenerateLink">
+                                            <i class="fa-solid fa-arrow-rotate-right" id="regenerate-link-btn"></i>
+                                        </button>
+                                    </div>
                                     @error('ticket_link')
                                     <div class="invalid-feedback">
                                         {{ $message }}

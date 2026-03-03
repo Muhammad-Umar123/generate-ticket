@@ -1,9 +1,9 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">
-                <img alt="image" src="{{ asset('assets/img/logo.png') }}" class="header-logo" />
-                <span class="logo-name">Grexsan</span>
+            <a href="#">
+                <!-- <img alt="image" src="{{ asset('assets/img/logo.png') }}" class="header-logo" /> -->
+                <span class="logo-name">Generate Ticket</span>
             </a>
         </div>
         <ul class="sidebar-menu">

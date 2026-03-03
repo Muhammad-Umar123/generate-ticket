@@ -43,25 +43,26 @@
                                 </thead>
                                 <tbody>
                                     @foreach($tickets as $ticket)
-                                        <tr>
-                                            <td>{{ $ticket->id }}</td>
-                                            <td>{{ $ticket->event_name }}</td>
-                                            <td>{{ $ticket->event_datetime }}</td>
-                                            <td>{{ $ticket->venue }}</td>
-                                            <td>{{ $ticket->section }}</td>
-                                            <td>{{ $ticket->row }}</td>
-                                            <td>{{ $ticket->seat }}</td>
-                                            <td>{{ $ticket->ticket_type }}</td>
-                                            <td>{{ $ticket->ticket_link }}</td>
-                                            <td style="display: flex; gap: 10px;">
-                                                <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-primary">Edit</a>
-                                                <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger" style="background-color: #ed0707;">Delete</button>
-                                                </form>
-                                            </td> 
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $ticket->id }}</td>
+                                        <td>{{ $ticket->event_name }}</td>
+                                        <td>{{ $ticket->event_datetime }}</td>
+                                        <td>{{ $ticket->venue }}</td>
+                                        <td>{{ $ticket->section }}</td>
+                                        <td>{{ $ticket->row }}</td>
+                                        <td>{{ $ticket->seat }}</td>
+                                        <td>{{ $ticket->ticket_type }}</td>
+                                        <td><a href="{{ route('tickets.showTicketsByLink', $ticket->ticket_link) }}" target="_blank" class="showTicketsByLink">
+                                                {{ $ticket->ticket_link }}</a></td>
+                                        <td style="display: flex; gap: 10px;">
+                                            <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-primary">Edit</a>
+                                            <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" style="background-color: #ed0707;">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -73,12 +74,4 @@
 
     </div>
 </section>
-<script>
-$(document).ready(function() {
-    $('#save-stage').DataTable({
-        "scrollX": true,
-        stateSave: true
-    });
-});
-</script>
 @endsection

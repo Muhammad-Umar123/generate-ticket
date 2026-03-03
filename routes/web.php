@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('tickets', TicketController::class);
+    Route::post('tickets/regenerate-link', [TicketController::class, 'regenerateLink'])->name('tickets.regenerateLink');
+    Route::get('{ticket_link}', [TicketController::class, 'showTicketsByLink'])->name('tickets.showTicketsByLink');
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });

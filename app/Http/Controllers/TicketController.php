@@ -26,7 +26,13 @@ class TicketController extends Controller
      */
     public function create()
     {
-        return view('tickets.create');
+        if (!session()->has('ticket_link')) {
+            session(['ticket_link' => $this->generateTicketLink()]);
+        }
+
+        $ticketLink = session('ticket_link');
+
+        return view('tickets.create', compact('ticketLink'));
     }
 
     /**
@@ -58,9 +64,10 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showTicketsByLink($link)
     {
-        //
+        $tickets = Event::where('ticket_link', $link)->get();
+        return view('tickets.show_by_link', compact('tickets'));
     }
 
     /**
@@ -113,5 +120,29 @@ class TicketController extends Controller
         $ticket->delete();
 
         return redirect()->route('tickets.index')->with('success', 'Ticket deleted successfully.');
+    }
+
+
+    private function generateTicketLink()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $link = '';
+        $maxIndex = strlen($characters) - 1;
+
+        for ($i = 0; $i < 32; $i++) {
+            $link .= $characters[rand(0, $maxIndex)];
+            if (($i + 1) % 8 === 0 && $i != 31) {
+                $link .= '-';
+            }
+        }
+
+        return $link;
+    }
+
+    public function regenerateLink()
+    {
+        $newLink = $this->generateTicketLink();
+        session(['ticket_link' => $newLink]);
+        return response()->json(['ticket_link' => $newLink]);
     }
 }
