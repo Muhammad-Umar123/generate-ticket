@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 @section('content')
 <div class="swiper mySwiper">
@@ -30,9 +30,20 @@
                 <div class="ticket-footer">Standard Admission</div>
 
                 <div class="barcode-section">
-                    <img src="{{ asset('assets/img/barcode.png') }}" alt="Barcode" class="barcode-image">
-                    <p>Screenshots won't get you in.</p>
+
+                    <div class="barcode-wrapper">
+                        <canvas class="pdf417Canvas"
+                            data-link="{{ $ticket->ticket_link }}">
+                        </canvas>
+                        <div class="scan-effect"></div>
+                        <div class="scan-effect-second"></div>
+                    </div>
+
+                    <p class="barcode-text">Screenshots won't get you in.</p>
+
                 </div>
+
+
             </div>
         </div>
         @endforeach
@@ -47,3 +58,32 @@
 </div>
 
 @endsection
+@push('scripts')
+<script>
+    function generateAllBarcodes() {
+
+        document.querySelectorAll(".pdf417Canvas").forEach(function(canvas) {
+
+            const ticketLink = canvas.dataset.link;
+            const dynamicValue = ticketLink + "_" + Date.now();
+
+            try {
+                bwipjs.toCanvas(canvas, {
+                    bcid: 'pdf417',
+                    text: dynamicValue,
+                    scale: 2,
+                    height: 15,
+                    includetext: false
+                });
+            } catch (e) {
+                console.error("Barcode error:", e);
+            }
+
+        });
+    }
+
+    generateAllBarcodes();
+
+    setInterval(generateAllBarcodes, 5000);
+</script>
+@endpush

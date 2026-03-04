@@ -11305,22 +11305,52 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 
 /* Barcode Section */
 .barcode-section {
-    padding: 9px 9px 23px;
+    padding: 70px 25px 75px;
     text-align: center;
 }
 
-.barcode-image {
-    width: 302px;
-    height: 175px;
-    margin-bottom: 15px;
-    display: inline-block;
+
+.barcode-wrapper {
+    position: relative;
+    display: inline-block; /* very important */
 }
 
-.barcode-text {
-    font-size: 13px;
-    color: #666;
+
+#pdf417Canvas {
+    display: block;
 }
 
+
+.scan-effect {
+    position: absolute;
+    top: -7px;
+    left: 0;
+    height: 80px;
+    width: 5.5px;
+    background: #1074e1;
+    animation: scan 1.75s ease-in-out infinite alternate;
+}
+.scan-effect-second{
+    position: absolute;
+    top: -2px;
+    left: 0;
+    height: 70px; 
+    width: 11px;
+    background: rgb(7, 108, 217);
+    opacity: 0.5;
+    animation: scan 1.75s ease-in-out infinite alternate;
+    animation-delay: .1s; 
+}
+
+/* Animation */
+@keyframes scan {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 100%;
+    }
+}
 
 .swiper {
     margin: 50px auto 0;

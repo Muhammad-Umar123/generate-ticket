@@ -27,7 +27,8 @@
     @yield('content')
     
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bwip-js/dist/bwip-js-min.js"></script>
+    @stack('scripts')
     <script>
         var swiper = new Swiper(".mySwiper", {
             pagination: {
